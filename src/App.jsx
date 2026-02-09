@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import CustomerList from './pages/CustomerList';
 import CustomerProfile from './pages/CustomerProfile';
 import RewardsCatalog from './pages/RewardsCatalog';
+import CustomerPortal from './pages/CustomerPortal';
 
 export default function App() {
   const store = useStore();
@@ -48,6 +49,13 @@ export default function App() {
         );
       case 'rewards':
         return <RewardsCatalog rewards={store.rewards} />;
+      case 'portal':
+        return (
+          <CustomerPortal
+            customers={store.customers}
+            onUpdateCustomer={store.updateCustomer}
+          />
+        );
       default:
         return (
           <Dashboard

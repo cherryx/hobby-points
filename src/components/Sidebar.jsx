@@ -2,6 +2,7 @@ const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: '📊' },
   { id: 'customers', label: 'Customers', icon: '👥' },
   { id: 'rewards', label: 'Rewards', icon: '🎁' },
+  { id: 'portal', label: 'Portal', icon: '🔑' },
 ];
 
 export default function Sidebar({ currentPage, onNavigate, mobileOpen, onClose }) {

@@ -3,8 +3,24 @@ import TierBadge from '../components/TierBadge';
 import PointsModal from '../components/PointsModal';
 import { getTier, getNextTier, progressToNextTier } from '../utils/tiers';
 
+const AVATAR_COLORS = [
+  'bg-indigo-500', 'bg-rose-500', 'bg-emerald-500', 'bg-amber-500',
+  'bg-cyan-500', 'bg-violet-500', 'bg-pink-500', 'bg-teal-500',
+];
+
+function getInitials(name) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function getAvatarColor(id) {
+  let hash = 0;
+  for (const ch of id) hash = hash * 31 + ch.charCodeAt(0);
+  return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
+}
+
 export default function CustomerProfile({ customer, transactions, onBack, onAdd, onSubtract }) {
   const [showPointsModal, setShowPointsModal] = useState(false);
+  const [lightboxIdx, setLightboxIdx] = useState(null);
 
   const custTransactions = useMemo(
     () => transactions
@@ -20,6 +36,12 @@ export default function CustomerProfile({ customer, transactions, onBack, onAdd,
   const nextTier = getNextTier(customer.points);
   const progress = progressToNextTier(customer.points);
 
+  const gallery = (customer.gallery || []).map((caption, i) => ({
+    caption,
+    thumb: `https://picsum.photos/seed/${customer.id}-g${i}/400/300`,
+    full: `https://picsum.photos/seed/${customer.id}-g${i}/800/600`,
+  }));
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -30,6 +52,9 @@ export default function CustomerProfile({ customer, transactions, onBack, onAdd,
         >
           ← Back
         </button>
+        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0 ${getAvatarColor(customer.id)}`}>
+          {getInitials(customer.name)}
+        </div>
         <div className="flex-1">
           <h2 className="text-2xl font-bold text-gray-900">{customer.name}</h2>
           <p className="text-sm text-gray-500">{customer.email}</p>
@@ -82,6 +107,8 @@ export default function CustomerProfile({ customer, transactions, onBack, onAdd,
           <dl className="space-y-3">
             <DetailRow label="Full Name" value={customer.name} />
             <DetailRow label="Email" value={customer.email} />
+            <DetailRow label="Address" value={customer.address || 'Not provided'} />
+            <DetailRow label="Date of Birth" value={customer.dob || 'Not provided'} />
             <DetailRow label="Member Since" value={customer.joinDate} />
             <DetailRow label="Customer ID" value={customer.id} />
           </dl>
@@ -121,6 +148,81 @@ export default function CustomerProfile({ customer, transactions, onBack, onAdd,
           <div className="p-8 text-center text-sm text-gray-500">No transactions yet.</div>
         )}
       </div>
+
+      {/* Hobby Gallery */}
+      {gallery.length > 0 && (
+        <div className="bg-white rounded-xl border border-gray-200">
+          <div className="p-6 border-b border-gray-200">
+            <h3 className="text-sm font-semibold text-gray-900">
+              {customer.hobby || 'Hobby'} Gallery
+            </h3>
+            <p className="text-xs text-gray-500 mt-1">{gallery.length} photos shared</p>
+          </div>
+          <div className="p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {gallery.map((img, i) => (
+              <button
+                key={i}
+                onClick={() => setLightboxIdx(i)}
+                className="group relative aspect-[4/3] rounded-lg overflow-hidden bg-gray-100"
+              >
+                <img
+                  src={img.thumb}
+                  alt={img.caption}
+                  className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
+                  <span className="text-xs text-white leading-tight">{img.caption}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Gallery Lightbox */}
+      {lightboxIdx !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+          onClick={() => setLightboxIdx(null)}
+        >
+          <div
+            className="relative max-w-3xl w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={gallery[lightboxIdx].full}
+              alt={gallery[lightboxIdx].caption}
+              className="w-full rounded-lg"
+            />
+            <p className="text-white text-sm text-center mt-3">
+              {gallery[lightboxIdx].caption}
+            </p>
+            <button
+              onClick={() => setLightboxIdx(null)}
+              className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center text-gray-700 hover:bg-gray-100 shadow-lg text-lg"
+            >
+              &times;
+            </button>
+            {lightboxIdx > 0 && (
+              <button
+                onClick={() => setLightboxIdx(lightboxIdx - 1)}
+                className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-gray-700 hover:bg-white shadow-lg"
+              >
+                &lsaquo;
+              </button>
+            )}
+            {lightboxIdx < gallery.length - 1 && (
+              <button
+                onClick={() => setLightboxIdx(lightboxIdx + 1)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-gray-700 hover:bg-white shadow-lg"
+              >
+                &rsaquo;
+              </button>
+            )}
+          </div>
+        </div>
+      )}
 
       {showPointsModal && (
         <PointsModal

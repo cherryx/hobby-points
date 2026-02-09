@@ -78,6 +78,12 @@ export function useStore() {
     return newCustomer;
   }, [updateCustomers]);
 
+  const updateCustomer = useCallback((customerId, updates) => {
+    updateCustomers(prev =>
+      prev.map(c => c.id === customerId ? { ...c, ...updates } : c)
+    );
+  }, [updateCustomers]);
+
   return {
     customers,
     transactions,
@@ -85,5 +91,6 @@ export function useStore() {
     addPoints,
     subtractPoints,
     addCustomer,
+    updateCustomer,
   };
 }
