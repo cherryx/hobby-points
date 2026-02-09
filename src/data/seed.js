@@ -1,0 +1,88 @@
+export const seedCustomers = [
+  {
+    id: '1',
+    name: 'Alice Chen',
+    email: 'alice.chen@email.com',
+    joinDate: '2024-03-15',
+    points: 1250,
+  },
+  {
+    id: '2',
+    name: 'Bob Martinez',
+    email: 'bob.martinez@email.com',
+    joinDate: '2024-06-01',
+    points: 720,
+  },
+  {
+    id: '3',
+    name: 'Carol Williams',
+    email: 'carol.w@email.com',
+    joinDate: '2024-08-22',
+    points: 340,
+  },
+  {
+    id: '4',
+    name: 'David Kim',
+    email: 'david.kim@email.com',
+    joinDate: '2024-01-10',
+    points: 1890,
+  },
+  {
+    id: '5',
+    name: 'Eva Johansson',
+    email: 'eva.j@email.com',
+    joinDate: '2025-01-05',
+    points: 95,
+  },
+  {
+    id: '6',
+    name: 'Frank Nguyen',
+    email: 'frank.n@email.com',
+    joinDate: '2024-11-18',
+    points: 510,
+  },
+  {
+    id: '7',
+    name: 'Grace Patel',
+    email: 'grace.p@email.com',
+    joinDate: '2024-04-30',
+    points: 1050,
+  },
+  {
+    id: '8',
+    name: 'Henry Thompson',
+    email: 'henry.t@email.com',
+    joinDate: '2025-02-14',
+    points: 0,
+  },
+];
+
+export const seedTransactions = [
+  { id: 't1', customerId: '1', type: 'earned', amount: 500, note: 'Purchase: Model train set', date: '2024-04-10' },
+  { id: 't2', customerId: '1', type: 'earned', amount: 300, note: 'Purchase: Paint supplies', date: '2024-06-15' },
+  { id: 't3', customerId: '1', type: 'redeemed', amount: 200, note: 'Redeemed: Free brush set', date: '2024-08-01' },
+  { id: 't4', customerId: '1', type: 'earned', amount: 650, note: 'Purchase: RC car kit', date: '2024-10-20' },
+  { id: 't5', customerId: '2', type: 'earned', amount: 400, note: 'Purchase: Puzzle collection', date: '2024-07-05' },
+  { id: 't6', customerId: '2', type: 'earned', amount: 320, note: 'Purchase: Board games bundle', date: '2024-09-12' },
+  { id: 't7', customerId: '3', type: 'earned', amount: 340, note: 'Purchase: Craft paper set', date: '2024-09-01' },
+  { id: 't8', customerId: '4', type: 'earned', amount: 1000, note: 'Purchase: Drone kit', date: '2024-02-15' },
+  { id: 't9', customerId: '4', type: 'earned', amount: 500, note: 'Purchase: 3D printer filament', date: '2024-05-20' },
+  { id: 't10', customerId: '4', type: 'redeemed', amount: 100, note: 'Redeemed: Sticker pack', date: '2024-07-10' },
+  { id: 't11', customerId: '4', type: 'earned', amount: 490, note: 'Purchase: Soldering station', date: '2024-12-01' },
+  { id: 't12', customerId: '5', type: 'earned', amount: 95, note: 'Purchase: Beginner knitting kit', date: '2025-01-20' },
+  { id: 't13', customerId: '6', type: 'earned', amount: 510, note: 'Purchase: Watercolor set', date: '2024-12-05' },
+  { id: 't14', customerId: '7', type: 'earned', amount: 800, note: 'Purchase: Pottery wheel', date: '2024-06-10' },
+  { id: 't15', customerId: '7', type: 'earned', amount: 450, note: 'Purchase: Glazing supplies', date: '2024-09-25' },
+  { id: 't16', customerId: '7', type: 'redeemed', amount: 200, note: 'Redeemed: Free brush set', date: '2024-11-15' },
+];
+
+export const seedRewards = [
+  { id: 'r1', name: 'Sticker Pack', description: 'Assorted hobby-themed stickers', pointsCost: 100, image: '🏷️' },
+  { id: 'r2', name: 'Free Brush Set', description: 'Professional-grade paint brushes (set of 5)', pointsCost: 200, image: '🖌️' },
+  { id: 'r3', name: '10% Off Coupon', description: '10% discount on your next purchase', pointsCost: 300, image: '🎟️' },
+  { id: 'r4', name: 'Craft Supply Box', description: 'Mystery box of assorted craft supplies', pointsCost: 500, image: '📦' },
+  { id: 'r5', name: 'Workshop Pass', description: 'Free entry to any in-store workshop', pointsCost: 750, image: '🎓' },
+  { id: 'r6', name: '25% Off Coupon', description: '25% discount on your next purchase', pointsCost: 800, image: '💎' },
+  { id: 'r7', name: 'Premium Tool Kit', description: 'Deluxe hobby tool kit with carrying case', pointsCost: 1000, image: '🧰' },
+  { id: 'r8', name: '$50 Store Credit', description: '$50 credit towards any purchase', pointsCost: 1500, image: '💰' },
+];
